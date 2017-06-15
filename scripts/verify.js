@@ -1,9 +1,6 @@
 import { response, users, logger } from 'syncano-server'
 import saml from 'saml20'
-
-console.log(META)
-console.log(ARGS)
-
+import {stringify} from 'querystring'
 const { debug } = logger('verify')
 
 const SAMLResponse = Buffer.from(ARGS.POST.SAMLResponse, 'base64').toString('utf8')
@@ -48,22 +45,12 @@ saml.parse(SAMLResponse, function(err, profile) {
     response.json({message: 'Error while parsing SAML response!'}, 400)
   } else {
     debug(profile)
-    users
-      .where('national_id', 'eq', profile.claims['signicat/national-id'])
-      .first()
-      .then(userProfile => {
-        debug(`user profile: ${userProfile.id}`)
-        const firstname = profile.claims['bankid.certificate/firstname']
-        const lastname = profile.claims['bankid.certificate/lastname']
-        debug([`${firstname} ${lastname}`])
-        debug([userProfile.first_name, userProfile.last_name])
-
-        if (firstname === userProfile.first_name && lastname === userProfile.last_name) {
-          users.update(userProfile.id, {
-            verified: true
-          })
-        }
-        global.setResponse(new global.HttpResponse(301, ' ', 'plain/text', {'Location': CONFIG.REDIRECT_URL}))
-      })
+    const args = {
+      profile: JSON.stringify(profile),
+      args: JSON.stringify(ARGS.get)
+    }
+    global.setResponse(new global.HttpResponse(301, ' ', 'plain/text', {
+      Location: `${CONFIG.REDIRECT_URL}${/\?/.test(CONFIG.REDIRECT_URL) ? '&' : '?'}${stringify(args)}`
+    }))
   }
 });
