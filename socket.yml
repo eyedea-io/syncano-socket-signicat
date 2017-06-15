@@ -1,11 +1,13 @@
 name: signicat
-description: Description of Signicat
-version: 0.0.2
+description: Integration with Digital Identity Service Provider - Signicat (www.signicat.com)
+url: https://github.com/eyedea-io/syncano-socket-signicat
+version: 0.0.3
 keywords:
   - signicat
   - bankid
   - authentication
   - signing
+
 
 classes:
   user:
@@ -17,7 +19,6 @@ classes:
       type: string
     - name: verified
       type: string
-
 config:
   SERVICE:
     description: Name of the service which supposed to be used for the connection
