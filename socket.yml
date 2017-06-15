@@ -1,12 +1,10 @@
 name: signicat
 description: Description of Signicat
-version: 0.0.1
-
+version: 0.0.2
 classes:
   user:
     - name: national_id
       type: string
-
 config:
   SERVICE:
     description: Name of the service which supposed to be used for the connection
@@ -16,7 +14,6 @@ config:
     description: Signicat host which supposed to be used for the connection
     example: preprod.signicat.com
     required: true
-
 endpoints:
   url:
     description: Verify SAML Response
@@ -25,7 +22,7 @@ endpoints:
       callback:
         type: string
         description: Callback URL
-        example: https://mydomain.com/verify
+        example: 'https://mydomain.com/verify'
       method:
         type: string
         description: Type of the login
@@ -37,19 +34,18 @@ endpoints:
       args:
         type: object
         description: Object with the additional arguments which will be added to the url
-        example: {id: 1234}
+        example:
+          id: 1234
     response:
       mimetype: application/json
       examples:
-        -
-          exit_code: 200
+        - exit_code: 200
           description: Success
           example: |
             {
               "url": "https://preprod.signicat.com/std/method/demo?id=nbid:demo:en&target=https://localhost/verify?id=1234"
             }
-        -
-          exit_code: 400
+        - exit_code: 400
           description: Failed
           example: |
             {
@@ -70,15 +66,13 @@ endpoints:
     response:
       mimetype: application/json
       examples:
-        -
-          exit_code: 200
+        - exit_code: 200
           description: Success
           example: |
             {
               "token": "YXQgQVMxJDAiBgNVBAMTG1Np"
             }
-        -
-          exit_code: 400
+        - exit_code: 400
           description: Failed
           example: |
             {
