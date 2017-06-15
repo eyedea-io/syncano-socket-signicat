@@ -1,6 +1,12 @@
 name: signicat
 description: Description of Signicat
 version: 0.0.2
+keywords:
+  - signicat
+  - bankid
+  - authentication
+  - signing
+
 classes:
   user:
     - name: national_id
