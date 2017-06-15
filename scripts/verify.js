@@ -56,9 +56,9 @@ saml.parse(SAMLResponse, function(err, profile) {
         const firstname = profile.claims['bankid.certificate/firstname']
         const lastname = profile.claims['bankid.certificate/lastname']
         debug([`${firstname} ${lastname}`])
-        debug([userProfile.full_name])
-        debug(`${firstname} ${lastname}` === userProfile.full_name)
-        if (`${firstname} ${lastname}` === userProfile.full_name) {
+        debug([userProfile.first_name, userProfile.last_name])
+
+        if (firstname === userProfile.first_name && lastname === userProfile.last_name) {
           users.update(userProfile.id, {
             verified: true
           })
