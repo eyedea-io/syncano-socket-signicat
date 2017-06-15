@@ -1,14 +1,14 @@
 name: signicat
-description: Integration with Digital Identity Service Provider - Signicat (www.signicat.com)
-url: https://github.com/eyedea-io/syncano-socket-signicat
-version: 0.0.3
+description: >-
+  Integration with Digital Identity Service Provider - Signicat
+  (www.signicat.com)
+url: 'https://github.com/eyedea-io/syncano-socket-signicat'
+version: 0.0.4
 keywords:
   - signicat
   - bankid
   - authentication
   - signing
-
-
 classes:
   user:
     - name: national_id
