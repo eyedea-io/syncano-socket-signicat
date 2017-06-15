@@ -1,6 +1,6 @@
 name: signicat
 description: Description of Signicat
-version: 0.0.2
+version: 0.0.3
 classes:
   user:
     - name: national_id
@@ -11,7 +11,6 @@ classes:
       type: string
     - name: verified
       type: string
-
 config:
   SERVICE:
     description: Name of the service which supposed to be used for the connection
