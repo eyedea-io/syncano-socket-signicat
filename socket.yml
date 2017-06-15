@@ -28,6 +28,10 @@ config:
     description: Signicat host which supposed to be used for the connection
     example: preprod.signicat.com
     required: true
+  REDIRECT_URL:
+    description: Where to redirect users after authorization
+    example: http://my-website.com
+    required: true
 endpoints:
   url:
     description: Verify SAML Response

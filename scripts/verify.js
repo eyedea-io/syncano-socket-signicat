@@ -63,7 +63,7 @@ saml.parse(SAMLResponse, function(err, profile) {
             verified: true
           })
         }
-        global.setResponse(new global.HttpResponse(301, ' ', 'plain/text', {'Location': 'http://stg.bizbot.no'}))
+        global.setResponse(new global.HttpResponse(301, ' ', 'plain/text', {'Location': CONFIG.REDIRECT_URL}))
       })
   }
 });
