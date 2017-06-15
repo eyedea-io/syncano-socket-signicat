@@ -3,7 +3,7 @@ description: >-
   Integration with Digital Identity Service Provider - Signicat
   (www.signicat.com)
 url: 'https://github.com/eyedea-io/syncano-socket-signicat'
-version: 0.0.5
+version: 0.0.6
 keywords:
   - signicat
   - bankid
@@ -30,7 +30,7 @@ config:
     required: true
   REDIRECT_URL:
     description: Where to redirect users after authorization
-    example: http://my-website.com
+    example: 'http://my-website.com'
     required: true
 endpoints:
   url:
