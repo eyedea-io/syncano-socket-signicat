@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "saml20": "^0.1.14",
+    "syncano-server": "beta"
+  }
+}

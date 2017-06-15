@@ -1,0 +1,86 @@
+name: signicat
+description: Description of Signicat
+version: 0.0.1
+
+classes:
+  user:
+    - name: national_id
+      type: string
+
+config:
+  SERVICE:
+    description: Name of the service which supposed to be used for the connection
+    example: demo
+    required: true
+  HOST:
+    description: Signicat host which supposed to be used for the connection
+    example: preprod.signicat.com
+    required: true
+
+endpoints:
+  url:
+    description: Verify SAML Response
+    file: scripts/url.js
+    parameters:
+      callback:
+        type: string
+        description: Callback URL
+        example: https://mydomain.com/verify
+      method:
+        type: string
+        description: Type of the login
+        example: nibi
+      lang:
+        type: string
+        description: Language of the auth form
+        example: en
+      args:
+        type: object
+        description: Object with the additional arguments which will be added to the url
+        example: {id: 1234}
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+              "url": "https://preprod.signicat.com/std/method/demo?id=nbid:demo:en&target=https://localhost/verify?id=1234"
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Something went wrong!"
+            }
+  verify:
+    description: Verify SAML Response
+    file: scripts/verify.js
+    parameters:
+      SAMLResponse:
+        type: base64string
+        description: SAML 1.0 Response
+        example: |
+          MIIDuzCCAqOgAwIBAgIBDjANBgkqhkiG9w0BAQsFADBJMQswCQYDVQQGEwJOTzEU
+          MBIGA1UEChMLU2lnbmljYXQgQVMxJDAiBgNVBAMTG1NpZ25pY2F0IEV4dGVybmFs
+          IENBICgyMDQ4KTAeFw0xNTA1MTIxMzA4MzVaFw0xNzA5MjMxMzA4MzVaMHgxCzAJ
+          BgNVBAYTAk5PMQ8wDQYDVQQI==
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+              "token": "YXQgQVMxJDAiBgNVBAMTG1Np"
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Verification failed!"
+            }
