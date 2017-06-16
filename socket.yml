@@ -32,6 +32,10 @@ config:
     description: Where to redirect users after authorization
     example: 'http://my-website.com'
     required: true
+  REGISTER_ENDPOINT:
+    description: Endpoint which should be used to register user
+    example: 'user-auth/register'
+    required: true
 endpoints:
   url:
     description: Verify SAML Response
