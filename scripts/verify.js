@@ -81,11 +81,14 @@ saml.parse(SAMLResponse, function(err, profile) {
         }))
       })
       .catch(err => {
+        if (err.response){
+          err.response.json()
+            .then(json => {
+              response.json({message: json}, 400)
+              process.exit()
+            })
+        }
         console.log(err)
-        err.response.text()
-          .then(resp => {
-            console.log(resp)
-          })
       })
   }
 });
