@@ -3,7 +3,7 @@ description: >-
   Integration with Digital Identity Service Provider - Signicat
   (www.signicat.com)
 url: 'https://github.com/eyedea-io/syncano-socket-signicat'
-version: 0.0.7
+version: 0.0.8
 keywords:
   - signicat
   - bankid
@@ -34,7 +34,7 @@ config:
     required: true
   REGISTER_ENDPOINT:
     description: Endpoint which should be used to register user
-    example: 'user-auth/register'
+    example: user-auth/register
     required: true
 endpoints:
   url:
