@@ -6,6 +6,8 @@ import {stringify} from 'querystring'
 const { debug } = logger('verify')
 const SAMLResponse = Buffer.from(ARGS.POST.SAMLResponse, 'base64').toString('utf8')
 
+debug(ARGS)
+
 const pubKey = `
 MIIDuzCCAqOgAwIBAgIBDjANBgkqhkiG9w0BAQsFADBJMQswCQYDVQQGEwJOTzEU
 MBIGA1UEChMLU2lnbmljYXQgQVMxJDAiBgNVBAMTG1NpZ25pY2F0IEV4dGVybmFs
@@ -52,24 +54,38 @@ saml.parse(SAMLResponse, function(err, profile) {
       .where('national_id', 'eq', profile.claims['signicat/national-id'])
       .first()
       .then(userProfile => {
+        debug('user profile from search')
+        debug(userProfile)
         if (userProfile) {
           return userProfile
         } else {
           return socket.post(CONFIG.REGISTER_ENDPOINT, {
             username: ARGS.username,
-            password: Math.random().toString(36).slice(-8)
+            password: Math.random().toString(36).slice(-8),
+            national_id: profile.claims['signicat/national-id']
           })
         }
       })
       .then(userProfile => {
+        debug('user profile')
         debug(userProfile)
         const args = {
           user_key: userProfile.user_key,
-          args: JSON.stringify(ARGS.get)
+          // args: JSON.stringify(ARGS.get)
         }
+
+        debug('location')
+        debug(`${CONFIG.REDIRECT_URL}${/\?/.test(CONFIG.REDIRECT_URL) ? '&' : '?'}${stringify(args)}`)
         global.setResponse(new global.HttpResponse(301, ' ', 'plain/text', {
           Location: `${CONFIG.REDIRECT_URL}${/\?/.test(CONFIG.REDIRECT_URL) ? '&' : '?'}${stringify(args)}`
         }))
+      })
+      .catch(err => {
+        console.log(err)
+        err.response.text()
+          .then(resp => {
+            console.log(resp)
+          })
       })
   }
 });
