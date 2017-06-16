@@ -1,4 +1,4 @@
-import { endpoint, response, users, logger } from 'syncano-server'
+import { socket, response, users, logger } from 'syncano-server'
 import saml from 'saml20'
 import {stringify} from 'querystring'
 
@@ -55,7 +55,7 @@ saml.parse(SAMLResponse, function(err, profile) {
         if (userProfile) {
           return userProfile
         } else {
-          return endpoint.post(CONFIG.REGISTER_ENDPOINT, {
+          return socket.post(CONFIG.REGISTER_ENDPOINT, {
             username: ARGS.username,
             password: Math.random().toString(36).slice(-8)
           })
