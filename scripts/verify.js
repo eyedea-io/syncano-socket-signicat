@@ -4,9 +4,7 @@ import {stringify} from 'querystring'
 
 
 const { debug } = logger('verify')
-const SAMLResponse = Buffer.from(ARGS.POST.SAMLResponse, 'base64').toString('utf8')
-
-debug(ARGS)
+const SAMLResponse = Buffer.from(ARGS.SAMLResponse, 'base64').toString('utf8')
 
 const pubKey = `
 MIIDuzCCAqOgAwIBAgIBDjANBgkqhkiG9w0BAQsFADBJMQswCQYDVQQGEwJOTzEU
@@ -69,9 +67,14 @@ saml.parse(SAMLResponse, function(err, profile) {
       .then(userProfile => {
         debug('user profile')
         debug(userProfile)
+
+        const verifyArgs = Object.assign({}, ARGS)
+        delete verifyArgs.SAMLResponse
+        delete verifyArgs.TARGET
+
         const args = {
           user_key: userProfile.user_key,
-          // args: JSON.stringify(ARGS.get)
+          args: JSON.stringify(verifyArgs)
         }
 
         debug('location')
