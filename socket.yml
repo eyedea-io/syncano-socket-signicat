@@ -3,7 +3,7 @@ description: >-
   Integration with Digital Identity Service Provider - Signicat
   (www.signicat.com)
 url: 'https://github.com/eyedea-io/syncano-socket-signicat'
-version: 0.0.12
+version: 0.0.13
 keywords:
   - signicat
   - bankid
@@ -27,7 +27,7 @@ config:
     required: true
   SERVICE_PASSWORD:
     description: Password for the service
-    example:
+    example: null
     required: true
   HOST:
     description: Signicat host which supposed to be used for the connection
@@ -35,7 +35,7 @@ config:
     required: true
   DEFAULT_SENDER_EMAIL:
     description: E-mail address of the sender of the notifications
-    example: 'no-replay@email.com'
+    example: no-replay@email.com
   REDIRECT_URL:
     description: Where to redirect users after authorization
     example: 'http://my-website.com'
@@ -115,7 +115,9 @@ endpoints:
       userIDs:
         type: array
         description: National IDs of the users who should sign
-        example: ["07023226604", "05054714493"]
+        example:
+          - '07023226604'
+          - 05054714493
       documentID:
         type: string
         description: ID of the document already uploaded to Signicat
