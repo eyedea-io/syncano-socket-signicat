@@ -25,10 +25,17 @@ config:
     description: Name of the service which supposed to be used for the connection
     example: demo
     required: true
+  SERVICE_PASSWORD:
+    description: Password for the service
+    example:
+    required: true
   HOST:
     description: Signicat host which supposed to be used for the connection
     example: preprod.signicat.com
     required: true
+  DEFAULT_SENDER_EMAIL:
+    description: E-mail address of the sender of the notifications
+    example: 'no-replay@email.com'
   REDIRECT_URL:
     description: Where to redirect users after authorization
     example: 'http://my-website.com'
@@ -94,6 +101,33 @@ endpoints:
           example: |
             {
               "token": "YXQgQVMxJDAiBgNVBAMTG1Np"
+            }
+        - exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Verification failed!"
+            }
+  sign:
+    description: Send sign request to specified users
+    file: scripts/sign.js
+    parameters:
+      userIDs:
+        type: array
+        description: National IDs of the users who should sign
+        example: ["07023226604", "05054714493"]
+      documentID:
+        type: string
+        description: ID of the document already uploaded to Signicat
+        example: 11082017mz25zwt2f4mfkyud9bblxdk8ixl0q8xy1vq2k0a5qrs1klt6f
+    response:
+      mimetype: application/json
+      examples:
+        - exit_code: 200
+          description: Success
+          example: |
+            {
+              "signURL": "https://preprod.signicat.com/std/docaction/demo?request_id=210820171yn37zmpysasgcnrtff1l2wdh85ax82e6umr8utioacvb04x6"
             }
         - exit_code: 400
           description: Failed

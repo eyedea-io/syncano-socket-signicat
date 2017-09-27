@@ -2,7 +2,6 @@ import { socket, response, users, logger } from 'syncano-server'
 import saml from 'saml20'
 import {stringify} from 'querystring'
 
-
 const { debug } = logger('verify')
 const SAMLResponse = Buffer.from(ARGS.SAMLResponse, 'base64').toString('utf8')
 
@@ -41,13 +40,13 @@ B5XLK+N1Z8S6fmWFwGiMYDCvg60dOUfLp4b/7KK0aj79l7WH7f6FCeT0uIuqpdQ=
 //   console.log(profile)
 // });
 
-saml.parse(SAMLResponse, function(err, profile) {
+saml.parse(SAMLResponse, function (err, profile) {
   if (err) {
     response.json({message: 'Error while parsing SAML response!'}, 400)
   } else {
     debug(profile)
 
-    let userToken = null;
+    let userToken = null
     users
       .where('national_id', 'eq', profile.claims['signicat/national-id'])
       .first()
@@ -84,7 +83,8 @@ saml.parse(SAMLResponse, function(err, profile) {
         }))
       })
       .catch(err => {
-        if (err.response){
+        console.log('XXX', err)
+        if (err.response) {
           err.response.json()
             .then(json => {
               response.json({message: json}, 400)
@@ -94,4 +94,4 @@ saml.parse(SAMLResponse, function(err, profile) {
         console.log(err)
       })
   }
-});
+})

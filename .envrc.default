@@ -1,0 +1,3 @@
+export SIGNICAT_HOST='preprod.signicat.com'
+export SIGNICAT_SERVICE='demo'
+export SIGNICAT_SERVICE_PASSWORD='Bond007'
