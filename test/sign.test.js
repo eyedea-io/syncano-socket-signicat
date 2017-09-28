@@ -18,7 +18,7 @@ describe('sign', function () {
 
     const uploadFile = () => {
       return new Promise((resolve, reject) => {
-        fs.createReadStream('test.txt').pipe(
+        fs.createReadStream('test/assets/test.txt').pipe(
             request.post(
                 `https://${config.HOST}/doc/${config.SERVICE}/sds/`,
                 function (error, response, body) {
