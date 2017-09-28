@@ -1,4 +1,5 @@
 {
+  "license": "MIT",
   "dependencies": {
     "saml20": "^0.1.14",
     "soap": "^0.20.0",
