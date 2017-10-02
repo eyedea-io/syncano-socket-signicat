@@ -4,7 +4,7 @@ import Syncano from 'syncano-server'
 
 export default (ctx) => {
   const {socket, response, users, logger} = Syncano(ctx)
-  const {debug} = logger('verify')
+  const {debug, error} = logger('verify')
 
   const SAMLResponse = Buffer.from(ctx.args.SAMLResponse, 'base64').toString('utf8')
 
@@ -85,14 +85,8 @@ export default (ctx) => {
           }))
         })
         .catch(err => {
-          if (err.response) {
-            err.response.json()
-              .then(json => {
-                response.json({message: json}, 400)
-                process.exit()
-              })
-          }
-          console.log(err)
+          error(err)
+          response.json({message: err.message}, 400)
         })
     }
   })

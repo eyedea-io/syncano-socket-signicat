@@ -3,8 +3,7 @@
   "dependencies": {
     "saml20": "^0.1.14",
     "soap": "^0.20.0",
-    "syncano-client": "beta",
-    "syncano-server": "gamma"
+    "syncano-server": "beta"
   },
   "scripts": {
     "test": "yarn && npm-run-all --parallel test:lint test:e2e:coverage",
@@ -19,6 +18,7 @@
     "chai": "^4.1.2",
     "mocha": "^3.5.3",
     "mockery": "^2.1.0",
+    "npm-run-all": "^4.1.1",
     "nyc": "^11.2.1",
     "sinon": "^3.3.0",
     "standard": "^10.0.3",

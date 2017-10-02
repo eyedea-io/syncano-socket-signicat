@@ -8,6 +8,10 @@ dependencies:
   override:
     - yarn global add syncano-cli@beta
 
+test:
+  override:
+    - exit 0
+
 deployment:
   production:
     branch: master
