@@ -1,54 +1,33 @@
 /* global describe it */
 import fs from 'fs'
-import request from 'request'
 import {assert} from 'chai'
 import {run} from 'syncano-test'
 
 describe('sign', function () {
-  it('send document to sign', function (done) {
-    const args = {
-      userIDs: ['07023226604', '05054714493']
-    }
+  const args = {
+    userIDs: ['07023226604', '05054714493']
+  }
 
-    const config = {
-      HOST: process.env.SIGNICAT_HOST,
-      SERVICE: process.env.SIGNICAT_SERVICE,
-      SERVICE_PASSWORD: process.env.SIGNICAT_SERVICE_PASSWORD
-    }
+  const config = {
+    HOST: process.env.SIGNICAT_HOST,
+    SERVICE: process.env.SIGNICAT_SERVICE,
+    SERVICE_PASSWORD: process.env.SIGNICAT_SERVICE_PASSWORD
+  }
 
-    const uploadFile = () => {
-      return new Promise((resolve, reject) => {
-        fs.createReadStream('test/assets/test.txt').pipe(
-            request.post(
-                `https://${config.HOST}/doc/${config.SERVICE}/sds/`,
-                function (error, response, body) {
-                  if (!error && response.statusCode === 201) {
-                    resolve(body)
-                  } else {
-                    reject(error)
-                  }
-                }
-            ).auth(
-                config.SERVICE,
-                config.SERVICE_PASSWORD
-            )
-        )
+  it('send document to sign vis socket', function (done) {
+    args['file'] = fs.createReadStream('test/assets/test.txt')
+    run('upload-document', {args, config})
+      .then((res) => {
+        const signArgs = {
+          documentID: res.data.documentID,
+          userIDs: args.userIDs
+        }
+        return run('sign', {args: signArgs, config})
       })
-    }
-
-    uploadFile()
-      .then(documentID => {
-        args.documentID = documentID
-        return run('sign', {args, config})
-      })
-      .then(response => {
-        assert.property(response.data, 'signURL')
-        assert.propertyVal(response, 'code', 200)
+      .then(res => {
+        assert.property(res.data, 'signURL')
+        assert.propertyVal(res, 'code', 200)
         done()
-      })
-      .catch(err => {
-        console.log(err)
-        done(err)
       })
   })
 })
