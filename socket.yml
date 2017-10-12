@@ -3,7 +3,7 @@ description: >-
   Integration with Digital Identity Service Provider - Signicat
   (www.signicat.com)
 url: 'https://github.com/eyedea-io/syncano-socket-signicat'
-version: 0.0.15
+version: 0.0.16
 keywords:
   - signicat
   - bankid
