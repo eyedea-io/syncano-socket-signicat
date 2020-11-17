@@ -4,7 +4,7 @@
     "axios": "^0.16.2",
     "form-data": "^2.3.1",
     "saml20": "^0.1.14",
-    "soap": "^0.20.0",
+    "soap": "^0.35.0",
     "syncano-server": "beta"
   },
   "scripts": {
